@@ -56,8 +56,16 @@ if (Meteor.isClient) {
         var secsLeft = Math.ceil((serverTime - curtime)/100)/10;
         if(secsLeft < 0)
           Meteor.call("checkForToggle");
-        else
-          return secsLeft;
+        else {
+          formattedSeconds = String(secsLeft)
+          if(parseInt(secsLeft) == secsLeft) {
+            formattedSeconds += ".0";
+          }
+          if(secsLeft < 10) {
+            formattedSeconds = "0"+formattedSeconds;
+          }
+          return formattedSeconds;
+        }
       },
       currentNominatingPlayer : function() {
           return AuctionData.findOne().Nominator;
